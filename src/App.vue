@@ -1,57 +1,41 @@
 <script>
+import BenderStatistics from './components/BenderStatistics.vue'
 export default {
+  components: {
+    BenderStatistics
+  },
   data: () => ({
-    newCharacter: {
-      name: '',
-      element: []
-    },
+    count: 10,
+    counterTitle: 'Counter Standart',
+    incrementAmount: 8,
     characterList: [
       { name: 'Ang', element: ['Air', 'Earth', 'Water', 'Fire'] },
       { name: 'Zuko', element: ['Fire'] },
       { name: 'Toph', element: ['Earth'] },
       { name: 'Katara', element: ['Water'] }
     ],
+    newCharacter: {
+      name: '',
+      element: []
+    },
     favoriteList: []
   }),
-  computed: {
-    benderStatistics() {
-      const elements = ['Air', 'Earth', 'Fire', 'Water']
-      const statistics = {
-        Air: 0,
-        Earth: 0,
-        Water: 0,
-        Fire: 0
-      }
-      this.characterList.forEach((character) => {
-        elements.forEach((element) => {
-          if (character.element.indexOf(element) > -1) {
-            statistics[element] += 1
-          }
-        })
-      })
-      return statistics
-    }
-  },
+
   methods: {
-    favoriteCharacter(character) {
-      this.favoriteList.push(character)
-      console.log(this.favoriteList)
-    },
     addNewCharacter() {
       this.characterList.push(this.newCharacter)
       this.newCharacter = { name: '' }
+    },
+    favoriteCharacter(character) {
+      this.favoriteList.push(character)
+      console.log(this.favoriteList)
     }
   }
 }
 </script>
 
 <template>
-  <h2>Statistics</h2>
-  <ul>
-    <li v-for="(stat, type) in benderStatistics" :key="`bender-${stat}-${type}`">
-      {{ type }}: {{ stat }}
-    </li>
-  </ul>
+  <BenderStatistics :characters="characterList" />
   <h2>Characters</h2>
   <p v-if="characterList.lenght === 0">There are no characters</p>
   <ul>
